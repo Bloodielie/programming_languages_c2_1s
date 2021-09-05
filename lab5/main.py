@@ -38,11 +38,7 @@ def bad_input(_: Students) -> None:
 
 
 def get_func(num: str) -> Callable[[Students], None]:
-    func_mapping = {
-        "1": increase_age,
-        "2": save_students_to_file,
-        "3": receive_student_from_file
-    }
+    func_mapping = {"1": increase_age, "2": save_students_to_file, "3": receive_student_from_file}
     return func_mapping.get(num, bad_input)
 
 
