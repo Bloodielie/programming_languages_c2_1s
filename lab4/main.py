@@ -1,11 +1,7 @@
 from pprint import pprint
-from typing import List, Iterator
+from typing import Iterator
 from random import randint
 from copy import deepcopy
-
-
-def input_numbers(count: int) -> List[int]:
-    return list(map(lambda i: int(input(f"Enter {i} number: ")), range(count)))
 
 
 def input_list() -> Iterator[str]:
@@ -15,7 +11,7 @@ def input_list() -> Iterator[str]:
 
 def first_task() -> None:
     print("1.1")
-    a, b, c, d, k = input_numbers(5)
+    a, b, c, d, k = (int(input(f"Enter {i} number: ")) for i in range(5))
 
     try:
         print(abs(1 - a * b ** c - a * (b ** 2 - c ** 2) + (b - c + a) * (12 + b) / (c - a)))
@@ -29,14 +25,13 @@ def first_task() -> None:
 
     print("1.3")
     result = 1
-    for element in [int(i) for i in input_list()]:
+    for element in list(map(int, input_list())):
         if element < 10:
             result *= element
     print(result)
 
     print("1.4")
-    result = 0
-    numbers = [int(i) for i in input_list()]
+    result, numbers = 0, list(map(int, input_list()))
     for number in numbers:
         result += number
     print(result / len(numbers))
@@ -44,8 +39,7 @@ def first_task() -> None:
 
 def second_task() -> None:
     print("2.1")
-    my_number = 13
-    user_number = 0
+    my_number, user_number = 13, 0
     while user_number != my_number:
         user_number = int(input("Enter number: "))
 
@@ -58,8 +52,7 @@ def second_task() -> None:
     print("".join((str(randint(1, 9)) for _ in range(5))) + "3")
 
     print("2.4")
-    text = input("Text: ")
-    amount = 0
+    text, amount = input("Text: "), 0
     for letter in text:
         if letter == "Л":
             amount += 1
@@ -88,8 +81,7 @@ def third_task() -> None:
     pprint(copy_matrix)
 
     print("3.2")
-    copy_matrix = deepcopy(matrix)
-    result = []
+    copy_matrix, result = deepcopy(matrix), []
     for row in range(len(copy_matrix)):
         res = 0
         for col in range(len(copy_matrix[row])):
@@ -105,12 +97,9 @@ def third_task() -> None:
         for element in row:
             if element < 5:
                 men += element
-            if element >= 5:
+            elif element >= 5:
                 bol += element
-    if bol >= men:
-        print(bol)
-    else:
-        print(men)
+    print(bol if bol >= men else men)
 
     print("3.5")
     copy_matrix = deepcopy(matrix)
@@ -128,8 +117,7 @@ def third_task() -> None:
     pprint(copy_matrix)
 
     print("3.7")
-    copy_matrix = deepcopy(matrix)
-    amount = 0
+    copy_matrix, amount = deepcopy(matrix), 0
     for row in copy_matrix:
         for element in row:
             if element == 3:
@@ -148,9 +136,8 @@ def fourth_task() -> None:
         "_Иванов;Иван;Иванович;23 года;Студент 3 курса;"
         "_Петров;Семен;Игоревич;22 года;Студент 2 курса"
     )
-    data = students.split(";_")
-    values = []
-    for row in data:
+    rows, values = students.split(";_"), []
+    for row in rows:
         values.append(row.split(";"))
 
     print("ФИО                  \tВозраст        \tКатегория")
@@ -168,45 +155,38 @@ def fourth_task() -> None:
         "_Борков Станислав Максимович;21 год;Студент 1 курса;"
         "_Петров Семен Семенович;21 год;Студент 1 курса;"
     )
-    data = students.split(";_")
-    values = []
-    for row in range(1, len(data)):
-        values.append(data[row].split(";"))
+    rows, values = students.split(";_"), []
+    for row in rows:
+        values.append(row.split(";"))
+
     valid_data = []
-    for element in values:
-        age = element[1][:2]
-        if int(age) > 21:
+    for element in values[1:]:
+        age = int(element[1][:2])
+        if age > 21:
             valid_data.append(element)
+
     print("ФИО                  \tВозраст        \tКатегория")
     for value in valid_data:
         print("{} \t{} \t\t{}".format(value[0], value[1], value[2]))
 
     print("4.4")
     text = "rorol orleke rkgjsol sgjsg"
-    print(f"Words: {len(text.split(' '))}")
-    print(f"Symbols: {len(text)}")
+    print("Words: {words}\nSymbols: {symbols}".format(words=len(text.split(' ')), symbols=len(text)))
 
 
 def sixth_task() -> None:
     matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
     print("6.1")
-    sum = 0
+    sum_ = 0
     for row in matrix:
         for element in row:
-            sum += element
-    print(sum)
+            sum_ += element
+    print(sum_)
 
     print("6.2")
-    list_ = ["a", "b", "c", "d", "b", "a", "b", "c", "d", "b"]
-    res = []
-    for i, element in enumerate(list_):
-        if i in list(range(4, 9)):
-            continue
-        res.append(element)
-    res.append("g")
-    res.append("h")
-    print(res)
+    symbols = ["a", "b", "c", "d", "b", "a", "b", "c", "d", "b"]
+    print(symbols[:4] + symbols[8:] + ["g", "h"])
 
     print("6.3")
     groups = [["БО-331101", ["Акулова Алена", "Пабушкина Асения"]], ["БОВ-421102", ["Олег Попоов", "Рома Кулибин"]]]
